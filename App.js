@@ -1,20 +1,40 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
+import { View, Text, TouchableOpacity, Image } from "react-native";
 
-export default function App() {
+const App = () => {
+  const [resultado, setResultado] = useState("");
+  const [imagemMoeda, setImagemMoeda] = useState("");
+
+  const jogarMoeda = () => {
+    const numero = Math.random();
+    const novoResultado = numero < 0.5 ? "Cara" : "Coroa";
+    setResultado(novoResultado);
+
+    if (novoResultado === "Cara") {
+      setImagemMoeda("Cara");
+    } else {
+      setImagemMoeda("Coroa");
+    }
+  };
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
+    <View className="flex flex-1 items-center justify-center bg-green-700">
+      <Text className="text-5xl mb-20 text-yellow-400 font-bold">
+        Flip Coin
+      </Text>
+      <TouchableOpacity onPress={jogarMoeda}>
+        {imagemMoeda === "cara" ? (
+          <Image className="w-52 h-52" source={require("./assets/cara.png")} />
+        ) : (
+          <Image className="w-52 h-52" source={require("./assets/cara.png")} />
+        )}
+        {/* <Image source={require('./images/real_cara.png')} style={{ width: 200, height: 200 }} /> */}
+      </TouchableOpacity>
+      {resultado !== "" && (
+        <Text className="text-2xl mt-5 text-yellow-400">{resultado}</Text>
+      )}
     </View>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
